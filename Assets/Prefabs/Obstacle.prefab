@@ -121,6 +121,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   text: {fileID: 0}
+  winParticles: {fileID: 5700784828077083704, guid: ed962e35f7fa6f34f8d27aa6d19ea293,
+    type: 3}
+  winParticlePos: {fileID: 0}
+  loseParticles: {fileID: 8176850701479282271, guid: b219c04f384e7f345bb8ae1fef443965,
+    type: 3}
 --- !u!54 &3885175348161142077
 Rigidbody:
   m_ObjectHideFlags: 0

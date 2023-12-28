@@ -7,14 +7,19 @@ using UnityEngine.SceneManagement;
 public class Obstacles : MonoBehaviour
 {
 
-    public float speed = 10.0f;
+    public float speed = 15.0f;
     public TextMeshProUGUI text; // This allows us to access the text created on text mess pro
+    public GameObject winParticles;
+    public Transform winParticlePos;
+    public GameObject loseParticles;
 
     // Start is called before the first frame update
     void Start()
     {
         text = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>(); // Gameobject.find serarches for the game object from it's name.
         // we need to have a closure saying that after finding the scoretext get the component which is to be textmeshproUGUI
+
+        winParticlePos = GameObject.Find("AvoidedConf").transform;
     }
 
     // Update is called once per frame
@@ -32,17 +37,25 @@ public class Obstacles : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
+            Instantiate(loseParticles, collision.gameObject.transform.position, Quaternion.identity);
             Destroy(collision.gameObject); // we are looking for collision in gameobject that is named Player and when a collision occurs,
             // we will destroy the given game object in this case, it is the player
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // We are asking the scene manager to load a newscene, so asks for the name of the scene
-            // but we are getting the active scene the current scene.
+            Invoke("ReloadLevel", 2);
+            
         }
 
         if (collision.gameObject.name == "Out")
         {
+            Instantiate(winParticles, winParticlePos.position, Quaternion.identity);
             int newScore = int.Parse(text.text) + 1;// we are parsing the int value to the text
             text.text = newScore.ToString(); // Making the current score the newscore
             Destroy(gameObject); // Now here, we are not destroying the collided gameobject but rather the game object which will be the obstacle not the Out box
         }
+    }
+
+    public void ReloadLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // We are asking the scene manager to load a newscene, so asks for the name of the scene
+                                                                    // but we are getting the active scene the current scene.
     }
 }
