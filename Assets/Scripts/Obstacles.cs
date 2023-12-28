@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Obstacles : MonoBehaviour
 {
@@ -16,10 +17,20 @@ public class Obstacles : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        try
+        {
+            winParticlePos = GameObject.Find("AvoidedConf").transform;
+        }
+        catch (Exception e)
+        {
+            print(e.Message);
+        }
         text = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>(); // Gameobject.find serarches for the game object from it's name.
         // we need to have a closure saying that after finding the scoretext get the component which is to be textmeshproUGUI
 
-        winParticlePos = GameObject.Find("AvoidedConf").transform;
+        
+        //The object of type 'Transform' has been destroyed but you are still trying to access it.
     }
 
     // Update is called once per frame
@@ -38,8 +49,11 @@ public class Obstacles : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             Instantiate(loseParticles, collision.gameObject.transform.position, Quaternion.identity);
-            Destroy(collision.gameObject); // we are looking for collision in gameobject that is named Player and when a collision occurs,
+            iTween.PunchScale(collision.gameObject, new Vector3(1.5f, 1.5f, 1.5f), 1.0f);
+            Destroy(collision.gameObject, 0.4f); // we are looking for collision in gameobject that is named Player and when a collision occurs,
             // we will destroy the given game object in this case, it is the player
+            Destroy(gameObject.GetComponent<Collider>());
+            Destroy(gameObject.GetComponent<MeshRenderer>());
             Invoke("ReloadLevel", 2);
             
         }

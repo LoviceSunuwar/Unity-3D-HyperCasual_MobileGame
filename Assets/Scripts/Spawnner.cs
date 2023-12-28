@@ -9,7 +9,7 @@ public class Spawnner : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("SpawnObstacle", 4, 4); // now every 4 second, this calls the funciton spawnobstacles.
+        InvokeRepeating("SpawnObstacle", 2, 2); // now every 4 second, this calls the funciton spawnobstacles.
     }
 
     public void SpawnObstacle()
