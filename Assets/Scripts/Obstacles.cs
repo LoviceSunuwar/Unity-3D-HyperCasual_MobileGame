@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Obstacles : MonoBehaviour
 {
@@ -33,6 +34,8 @@ public class Obstacles : MonoBehaviour
         {
             Destroy(collision.gameObject); // we are looking for collision in gameobject that is named Player and when a collision occurs,
             // we will destroy the given game object in this case, it is the player
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // We are asking the scene manager to load a newscene, so asks for the name of the scene
+            // but we are getting the active scene the current scene.
         }
 
         if (collision.gameObject.name == "Out")
